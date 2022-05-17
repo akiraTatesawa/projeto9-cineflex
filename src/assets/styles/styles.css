@@ -17,6 +17,20 @@ header {
   background-color: #c3cfd9;
 }
 
+button {
+  height: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #E8833A;
+  padding: 10px 15px;
+  margin-right: 8px;
+  border: none;
+  border-radius: 3px;
+  color: #ffffff;
+  font-size: 18px;
+}
+
 h1 {
   color: #e8833a;
   font-size: 34px;
@@ -28,10 +42,17 @@ h2 {
   margin: 50px 0;
 }
 
-main {
-  padding: 0 25px;
+h3 {
+  font-size: 20px;
+  letter-spacing: 0.02em;
 }
 
+main {
+  padding: 0 25px;
+  margin-bottom: 125px;
+}
+
+/* Screen 1 */
 .movies-section {
   display: flex;
   flex-flow: row wrap;
@@ -56,7 +77,21 @@ main {
   height: 193px;
 }
 
+/* Screen 2 */
+.hour-buttons {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 22px 0;
+}
+
+.hour-buttons button {
+  margin-bottom: 10px;
+}
+
+/* Footer */
 footer {
+  position: fixed;
+  bottom: 0;
   display: flex;
   align-items: center;
   justify-content: left;
