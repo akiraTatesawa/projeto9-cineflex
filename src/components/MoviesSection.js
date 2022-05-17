@@ -1,6 +1,6 @@
 import moviePoster from "../assets/img/movie_poster.png";
 
-function Movie() {
+export function Movie() {
   return (
     <figure className="movie-poster">
       <img src={moviePoster} alt="movie poster" />
