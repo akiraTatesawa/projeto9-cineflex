@@ -1,21 +1,54 @@
 import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import Footer from "./Footer";
 
-function Seat({ seatNumber, isAvailable }) {
+function Seat({
+  seatNumber,
+  isAvailable,
+  seatId,
+  setSelectedSeats,
+  selectedSeats,
+}) {
+  const [isSelected, setIsSelected] = useState(false);
+
+  function clickSeat() {
+    if (isSelected) {
+      setIsSelected(false);
+      const array = selectedSeats.filter((id) => id !== seatId);
+      setSelectedSeats(array);
+    } else if (!isAvailable) {
+      alert("Esse assento não está disponível");
+    } else {
+      setIsSelected(true);
+      setSelectedSeats([...selectedSeats, seatId]);
+    }
+  }
+
   return (
-    <button className={isAvailable ? "available" : "taken"}>
+    <button
+      className={`${isAvailable ? "available" : "taken"} ${
+        isSelected && isAvailable ? "selected" : ""
+      }`}
+      onClick={clickSeat}
+    >
       {seatNumber}
     </button>
   );
 }
 
-function Seats({ seatsArray }) {
+function Seats({ seatsArray, setSelectedSeats, selectedSeats }) {
   return (
     <div className="seats">
       {seatsArray.map((seat, index) => (
-        <Seat key={index} seatNumber={seat.name} isAvailable={seat.isAvailable}></Seat>
+        <Seat
+          key={index}
+          seatId={seat.id}
+          seatNumber={seat.name}
+          isAvailable={seat.isAvailable}
+          setSelectedSeats={setSelectedSeats}
+          selectedSeats={selectedSeats}
+        ></Seat>
       ))}
     </div>
   );
@@ -23,6 +56,7 @@ function Seats({ seatsArray }) {
 
 export default function MovieSeats() {
   const { idSessao } = useParams();
+  const [selectedSeats, setSelectedSeats] = useState([]);
   const [movieData, setMovieData] = useState({});
   const [seats, setSeats] = useState([]);
 
@@ -41,12 +75,18 @@ export default function MovieSeats() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(selectedSeats);
+
   return (
     <>
       <main>
         <h2>Selecione o(s) assento(s)</h2>
         <section className="seats-selection">
-          <Seats seatsArray={seats} />
+          <Seats
+            seatsArray={seats}
+            setSelectedSeats={setSelectedSeats}
+            selectedSeats={selectedSeats}
+          />
         </section>
         <div className="seats-caption">
           <div className="caption-item">
@@ -76,7 +116,9 @@ export default function MovieSeats() {
               name="buyers-cpf"
               placeholder="Digite seu CPF..."
             ></input>
-            <input type="submit" value="Reservar assento(s)" disabled></input>
+            <Link to="/sucesso">
+              <input type="submit" value="Reservar assento(s)"></input>
+            </Link>
           </form>
         </section>
       </main>

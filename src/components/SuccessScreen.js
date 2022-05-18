@@ -1,4 +1,6 @@
-export default function SuccessScreen({selectedMovieData}) {
+import { Link } from "react-router-dom";
+
+export default function SuccessScreen({ selectedMovieData }) {
   return (
     <main>
       <section className="success-screen">
@@ -22,7 +24,9 @@ export default function SuccessScreen({selectedMovieData}) {
           <p>Nome: Arthur</p>
           <p>CPF: 123.123.432-12</p>
         </div>
-        <button>Voltar para Home</button>
+        <Link to="/">
+          <button>Voltar para Home</button>
+        </Link>
       </section>
     </main>
   );
