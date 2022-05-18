@@ -30,11 +30,7 @@ export default function MoviesSection() {
       <h2>Selecione o filme</h2>
       <section className="movies-section">
         {movies.map((movie, index) => (
-          <Movie
-            idMovie={index + 1}
-            key={index}
-            moviePoster={movie.posterURL}
-          />
+          <Movie idMovie={movie.id} key={index} moviePoster={movie.posterURL} />
         ))}
       </section>
     </main>

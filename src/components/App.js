@@ -1,12 +1,15 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "../assets/styles/reset.css";
-import "../assets/styles/styles.css";
+// import { useState } from "react";
 import SuccessScreen from "./SuccessScreen";
 import MovieSeats from "./MovieSeats";
 import MovieDateShowtimes from "./MovieDateShowtimes";
 import MoviesSection from "./MoviesSection";
+import "../assets/styles/reset.css";
+import "../assets/styles/styles.css";
 
 export default function App() {
+  // const [selectedMovieData, setSelectedMovieData] = useState({});
+
   return (
     <BrowserRouter>
       <header>

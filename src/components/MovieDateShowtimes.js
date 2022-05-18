@@ -31,6 +31,7 @@ export default function MovieDateShowtimes() {
       setMovieDays([...response.data.days]);
       setMovie({ ...response.data });
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

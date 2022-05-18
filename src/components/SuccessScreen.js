@@ -1,4 +1,4 @@
-export default function SuccessScreen() {
+export default function SuccessScreen({selectedMovieData}) {
   return (
     <main>
       <section className="success-screen">

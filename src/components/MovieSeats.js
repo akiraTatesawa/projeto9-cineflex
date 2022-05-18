@@ -1,32 +1,52 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 import Footer from "./Footer";
 
-function Seat({ seatNumber }) {
-  return <button className="available">{seatNumber}</button>;
+function Seat({ seatNumber, isAvailable }) {
+  return (
+    <button className={isAvailable ? "available" : "taken"}>
+      {seatNumber}
+    </button>
+  );
 }
 
-function Seats() {
-  const array = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 91, 2, 3, 4, 5, 6, 7, 8, 9, 91, 2, 3, 4, 5, 6, 7,
-    8, 9, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 91, 2, 3, 4, 5, 6, 7, 8, 9, 9, 1, 2, 3,
-  ];
-  console.log(array);
-
+function Seats({ seatsArray }) {
   return (
     <div className="seats">
-      {array.map((item, index) => (
-        <Seat key={index} seatNumber={index + 1}></Seat>
+      {seatsArray.map((seat, index) => (
+        <Seat key={index} seatNumber={seat.name} isAvailable={seat.isAvailable}></Seat>
       ))}
     </div>
   );
 }
 
 export default function MovieSeats() {
+  const { idSessao } = useParams();
+  const [movieData, setMovieData] = useState({});
+  const [seats, setSeats] = useState([]);
+
+  useEffect(() => {
+    const promise = axios.get(
+      `https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`
+    );
+    promise.then((response) => {
+      setMovieData({
+        ...response.data.movie,
+        time: response.data.name,
+        weekday: response.data.day.weekday,
+      });
+      setSeats([...response.data.seats]);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <main>
         <h2>Selecione o(s) assento(s)</h2>
         <section className="seats-selection">
-          <Seats />
+          <Seats seatsArray={seats} />
         </section>
         <div className="seats-caption">
           <div className="caption-item">
@@ -60,7 +80,11 @@ export default function MovieSeats() {
           </form>
         </section>
       </main>
-      <Footer />
+      <Footer
+        movieTitle={movieData.title}
+        moviePoster={movieData.posterURL}
+        date={`${movieData.weekday} - ${movieData.time}`}
+      />
     </>
   );
 }

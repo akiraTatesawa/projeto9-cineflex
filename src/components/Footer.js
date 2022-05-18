@@ -1,4 +1,4 @@
-export default function Footer({ movieTitle, moviePoster }) {
+export default function Footer({ movieTitle, moviePoster, ...otherProps }) {
   return (
     <footer>
       <figure className="movie-poster">
@@ -6,7 +6,7 @@ export default function Footer({ movieTitle, moviePoster }) {
       </figure>
       <div>
         <p>{movieTitle}</p>
-        <p>Quinta-feira - 15:00</p>
+        <p>{otherProps.date}</p>
       </div>
     </footer>
   );
