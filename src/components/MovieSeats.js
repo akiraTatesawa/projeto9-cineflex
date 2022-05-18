@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Footer from "./Footer";
 
@@ -59,6 +59,21 @@ export default function MovieSeats() {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [movieData, setMovieData] = useState({});
   const [seats, setSeats] = useState([]);
+  const [inputs, setInputs] = useState({});
+  let navigate = useNavigate();
+  
+  const handleChange = (event) => {
+    const inputName = event.target.name;
+    const inputValue = event.target.value;
+    setInputs(values => ({...values, [inputName]: inputValue, ids:selectedSeats}));
+  }
+
+  const handleSubmit = (event) => {
+    setInputs({...inputs, ids: selectedSeats});
+    event.preventDefault();
+    const promise = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many", inputs);
+    promise.then(() => navigate("/sucesso")).catch((error) => console.log(error));
+  }
 
   useEffect(() => {
     const promise = axios.get(
@@ -74,8 +89,6 @@ export default function MovieSeats() {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log(selectedSeats);
 
   return (
     <>
@@ -103,22 +116,24 @@ export default function MovieSeats() {
           </div>
         </div>
         <section className="buyer-data-inputs">
-          <form>
-            <label htmlFor="buyers-name">Nome do comprador:</label>
+          <form onSubmit={handleSubmit} >
+            <label htmlFor="name">Nome do comprador:</label>
             <input
               type="text"
-              name="buyers-name"
+              name="name"
+              value={inputs.name || ""}
+              onChange={handleChange}
               placeholder="Digite o seu nome..."
             ></input>
-            <label htmlFor="buyers-cpf">CPF do comprador:</label>
+            <label htmlFor="cpf">CPF do comprador:</label>
             <input
               type="text"
-              name="buyers-cpf"
+              name="cpf"
+              value={inputs.cpf || ""}
+              onChange={handleChange}
               placeholder="Digite seu CPF..."
             ></input>
-            <Link to="/sucesso">
-              <input type="submit" value="Reservar assento(s)"></input>
-            </Link>
+            <input type="submit" value="Reservar assento(s)"></input>
           </form>
         </section>
       </main>
