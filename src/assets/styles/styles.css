@@ -194,6 +194,14 @@ main {
   margin-bottom: 30px;
 }
 
+.buyer-data-inputs form input[disabled][type="text"] {
+  background-color: #F3F3F3 ;
+}
+
+.buyer-data-inputs form input[disabled][type="submit"] {
+  background-color: #B8AFAF ;
+}
+
 /* Screen 3 */
 .success-title {
   color: #247a6b;

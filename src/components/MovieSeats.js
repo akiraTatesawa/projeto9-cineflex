@@ -16,7 +16,7 @@ function Seat({
     if (isSelected) {
       setIsSelected(false);
       const array = selectedSeats.filter((id) => id !== seatId);
-      setSelectedSeats(array);
+      setSelectedSeats([...array]);
     } else if (!isAvailable) {
       alert("Esse assento não está disponível");
     } else {
@@ -59,21 +59,43 @@ export default function MovieSeats() {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [movieData, setMovieData] = useState({});
   const [seats, setSeats] = useState([]);
-  const [inputs, setInputs] = useState({});
+  const [inputs, setInputs] = useState({ ids: [], name: "", cpf: "" });
   let navigate = useNavigate();
-  
+
   const handleChange = (event) => {
     const inputName = event.target.name;
     const inputValue = event.target.value;
-    setInputs(values => ({...values, [inputName]: inputValue, ids:selectedSeats}));
-  }
+    setInputs({ ...inputs, [inputName]: inputValue, ids: selectedSeats });
+  };
+
+  useEffect(() => {
+    setInputs({ ...inputs, ids: [...selectedSeats] });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedSeats]);
 
   const handleSubmit = (event) => {
-    setInputs({...inputs, ids: selectedSeats});
     event.preventDefault();
-    const promise = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many", inputs);
-    promise.then(() => navigate("/sucesso")).catch((error) => console.log(error));
-  }
+    if (
+      inputs.ids.length === 0 ||
+      inputs.name.length === 0 ||
+      inputs.cpf.length === 0
+    ) {
+      alert("Preencha os campos corretamente!");
+      return;
+    }
+
+    const promise = axios.post(
+      "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many",
+      inputs
+    );
+    promise
+      .then((response) => {
+        // navigate("/sucesso");
+      })
+      .catch((error) => {
+        alert("Preencha os campos corretamente!");
+      });
+  };
 
   useEffect(() => {
     const promise = axios.get(
@@ -89,7 +111,7 @@ export default function MovieSeats() {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  
   return (
     <>
       <main>
@@ -116,24 +138,30 @@ export default function MovieSeats() {
           </div>
         </div>
         <section className="buyer-data-inputs">
-          <form onSubmit={handleSubmit} >
+          <form onSubmit={handleSubmit}>
             <label htmlFor="name">Nome do comprador:</label>
             <input
               type="text"
               name="name"
-              value={inputs.name || ""}
+              value={selectedSeats.length === 0 ? "" : inputs.name}
               onChange={handleChange}
               placeholder="Digite o seu nome..."
+              disabled={selectedSeats.length === 0}
             ></input>
             <label htmlFor="cpf">CPF do comprador:</label>
             <input
               type="text"
               name="cpf"
-              value={inputs.cpf || ""}
+              value={selectedSeats.length === 0 ? "" : inputs.cpf}
               onChange={handleChange}
               placeholder="Digite seu CPF..."
+              disabled={selectedSeats.length === 0}
             ></input>
-            <input type="submit" value="Reservar assento(s)"></input>
+            <input
+              type="submit"
+              value="Reservar assento(s)"
+              disabled={selectedSeats.length === 0}
+            ></input>
           </form>
         </section>
       </main>
