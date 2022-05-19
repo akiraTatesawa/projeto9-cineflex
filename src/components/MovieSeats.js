@@ -2,60 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Footer from "./Footer";
-
-function Seat({
-  seatNumber,
-  isAvailable,
-  seatId,
-  setSelectedSeats,
-  selectedSeats,
-}) {
-  const [isSelected, setIsSelected] = useState(false);
-
-  function clickSeat() {
-    if (isSelected) {
-      setIsSelected(false);
-      const arrayIds = selectedSeats.seatsIds.filter((id) => id !== seatId);
-      const arrayNumbers = selectedSeats.seatsNumbers.filter((num) => num !== seatNumber)
-      setSelectedSeats({...selectedSeats, seatsIds: [...arrayIds], seatsNumbers: [...arrayNumbers]});
-    } else if (!isAvailable) {
-      alert("Esse assento não está disponível");
-    } else {
-      setIsSelected(true);
-      const arrayIds = [...selectedSeats.seatsIds, seatId];
-      const arrayNumbers = [...selectedSeats.seatsNumbers, seatNumber]
-      setSelectedSeats({...selectedSeats, seatsIds: [...arrayIds], seatsNumbers: [...arrayNumbers]});
-    }
-  }
-
-  return (
-    <button
-      className={`${isAvailable ? "available" : "taken"} ${
-        isSelected && isAvailable ? "selected" : ""
-      }`}
-      onClick={clickSeat}
-    >
-      {seatNumber}
-    </button>
-  );
-}
-
-function Seats({ seatsArray, setSelectedSeats, selectedSeats }) {
-  return (
-    <div className="seats">
-      {seatsArray.map((seat, index) => (
-        <Seat
-          key={index}
-          seatId={seat.id}
-          seatNumber={seat.name}
-          isAvailable={seat.isAvailable}
-          setSelectedSeats={setSelectedSeats}
-          selectedSeats={selectedSeats}
-        ></Seat>
-      ))}
-    </div>
-  );
-}
+import Seats from "./Seats";
 
 export default function MovieSeats({ ticketData, setTicketData }) {
   const { idSessao } = useParams();
@@ -103,7 +50,7 @@ export default function MovieSeats({ ticketData, setTicketData }) {
           date: movieData.date,
           time: movieData.time,
           movieTitle: movieData.title,
-          seats: selectedSeats.seatsNumbers,
+          seats: selectedSeats.seatsNumbers.sort((a,b) => a-b),
         });
         navigate("/sucesso");
       })
@@ -128,8 +75,6 @@ export default function MovieSeats({ ticketData, setTicketData }) {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log(selectedSeats.seatsNumbers, selectedSeats.seatsIds);
 
   return (
     <>

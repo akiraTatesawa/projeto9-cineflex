@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Footer from "./Footer";
 
-function MovieData({ weekday, date, showtimes }) {
+const MovieDateOptions = ({ weekday, date, showtimes }) => {
   return (
     <>
       <h3>{`${weekday} - ${date}`}</h3>
@@ -16,12 +16,12 @@ function MovieData({ weekday, date, showtimes }) {
       </div>
     </>
   );
-}
+};
 
 export default function MovieDateShowtimes() {
   const { idMovie } = useParams();
   const [movieDays, setMovieDays] = useState([]);
-  const [movie, setMovie] = useState({});
+  const [movieData, setMovieData] = useState({});
 
   useEffect(() => {
     const promise = axios.get(
@@ -29,7 +29,7 @@ export default function MovieDateShowtimes() {
     );
     promise.then((response) => {
       setMovieDays([...response.data.days]);
-      setMovie({ ...response.data });
+      setMovieData({ ...response.data });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -40,7 +40,7 @@ export default function MovieDateShowtimes() {
         <h2>Selecione o horário</h2>
         <section className="date-selection">
           {movieDays.map((day, index) => (
-            <MovieData
+            <MovieDateOptions
               key={index}
               weekday={day.weekday}
               date={day.date}
@@ -49,7 +49,7 @@ export default function MovieDateShowtimes() {
           ))}
         </section>
       </main>
-      <Footer moviePoster={movie.posterURL} movieTitle={movie.title} />
+      <Footer moviePoster={movieData.posterURL} movieTitle={movieData.title} />
     </>
   );
 }
