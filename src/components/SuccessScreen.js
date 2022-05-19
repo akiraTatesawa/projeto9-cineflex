@@ -12,12 +12,12 @@ export default function SuccessScreen({ ticketData }) {
         <div>
           <h3>Filme e Sessão</h3>
           <p>{ticketData.movieTitle}</p>
-          <p>{`${ticketData.date} ${ticketData.time}`}</p>
+          <p>{`${ticketData.date} - ${ticketData.time}`}</p>
         </div>
         <div>
           <h3>Ingressos</h3>
           {ticketData.seats.map((seatId, index) => (
-            <p key={index}>Assentos {seatId}</p>
+            <p key={index}>Assento {seatId}</p>
           ))}
         </div>
         <div>

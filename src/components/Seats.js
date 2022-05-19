@@ -9,29 +9,37 @@ const Seat = ({
 }) => {
   const [isSelected, setIsSelected] = useState(false);
 
+  function removeSelectedSeat() {
+    const arrayIds = selectedSeats.seatsIds.filter((id) => id !== seatId);
+    const arrayNumbers = selectedSeats.seatsNumbers.filter(
+      (num) => num !== seatNumber
+    );
+    setSelectedSeats({
+      ...selectedSeats,
+      seatsIds: [...arrayIds],
+      seatsNumbers: [...arrayNumbers],
+    });
+  }
+
+  function addSelectedSeat() {
+    const arrayIds = [...selectedSeats.seatsIds, seatId];
+    const arrayNumbers = [...selectedSeats.seatsNumbers, seatNumber];
+    setSelectedSeats({
+      ...selectedSeats,
+      seatsIds: [...arrayIds],
+      seatsNumbers: [...arrayNumbers],
+    });
+  }
+
   function clickSeat() {
     if (isSelected) {
       setIsSelected(false);
-      const arrayIds = selectedSeats.seatsIds.filter((id) => id !== seatId);
-      const arrayNumbers = selectedSeats.seatsNumbers.filter(
-        (num) => num !== seatNumber
-      );
-      setSelectedSeats({
-        ...selectedSeats,
-        seatsIds: [...arrayIds],
-        seatsNumbers: [...arrayNumbers],
-      });
+      removeSelectedSeat();
     } else if (!isAvailable) {
       alert("Esse assento não está disponível");
     } else {
       setIsSelected(true);
-      const arrayIds = [...selectedSeats.seatsIds, seatId];
-      const arrayNumbers = [...selectedSeats.seatsNumbers, seatNumber];
-      setSelectedSeats({
-        ...selectedSeats,
-        seatsIds: [...arrayIds],
-        seatsNumbers: [...arrayNumbers],
-      });
+      addSelectedSeat();
     }
   }
 

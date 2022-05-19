@@ -27,6 +27,7 @@ export default function MovieDateShowtimes() {
     const promise = axios.get(
       `https://mock-api.driven.com.br/api/v5/cineflex/movies/${idMovie}/showtimes`
     );
+
     promise.then((response) => {
       setMovieDays([...response.data.days]);
       setMovieData({ ...response.data });
@@ -53,3 +54,5 @@ export default function MovieDateShowtimes() {
     </>
   );
 }
+
+//data.days e data

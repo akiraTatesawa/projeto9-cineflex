@@ -15,18 +15,18 @@ export default function MovieSeats({ ticketData, setTicketData }) {
   const [inputs, setInputs] = useState({ ids: [], name: "", cpf: "" });
   let navigate = useNavigate();
 
-  const handleChange = (event) => {
+  function handleChange(event) {
     const inputName = event.target.name;
     const inputValue = event.target.value;
-    setInputs({ ...inputs, [inputName]: inputValue, ids: selectedSeats.seatsIds });
-  };
 
-  useEffect(() => {
-    setInputs({ ...inputs, ids: [...selectedSeats.seatsIds] });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedSeats.seatsIds]);
+    setInputs({
+      ...inputs,
+      [inputName]: inputValue,
+      ids: selectedSeats.seatsIds,
+    });
+  }
 
-  const handleSubmit = (event) => {
+  function handleSubmit(event) {
     event.preventDefault();
     if (
       inputs.ids.length === 0 ||
@@ -50,19 +50,21 @@ export default function MovieSeats({ ticketData, setTicketData }) {
           date: movieData.date,
           time: movieData.time,
           movieTitle: movieData.title,
-          seats: selectedSeats.seatsNumbers.sort((a,b) => a-b),
+          seats: selectedSeats.seatsNumbers.sort((a, b) => a - b),
         });
+
         navigate("/sucesso");
       })
       .catch(() => {
         alert("Preencha os campos corretamente!");
       });
-  };
+  }
 
   useEffect(() => {
     const promise = axios.get(
       `https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`
     );
+
     promise.then((response) => {
       setMovieData({
         ...response.data.movie,
@@ -75,6 +77,11 @@ export default function MovieSeats({ ticketData, setTicketData }) {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setInputs({ ...inputs, ids: [...selectedSeats.seatsIds] });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedSeats.seatsIds]);
 
   return (
     <>
