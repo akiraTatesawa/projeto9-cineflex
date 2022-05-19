@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-// import { useState } from "react";
+import { useState } from "react";
 import SuccessScreen from "./SuccessScreen";
 import MovieSeats from "./MovieSeats";
 import MovieDateShowtimes from "./MovieDateShowtimes";
@@ -8,7 +8,14 @@ import "../assets/styles/reset.css";
 import "../assets/styles/styles.css";
 
 export default function App() {
-  // const [selectedMovieData, setSelectedMovieData] = useState({});
+  const [ticketData, setTicketData] = useState({
+    seats: [],
+    name: "",
+    cpf: "",
+    movieTitle: "",
+    date: "",
+    time: "",
+  });
 
   return (
     <BrowserRouter>
@@ -18,8 +25,16 @@ export default function App() {
       <Routes>
         <Route path="/" element={<MoviesSection />} />
         <Route path="/sessoes/:idMovie" element={<MovieDateShowtimes />} />
-        <Route path="/assentos/:idSessao" element={<MovieSeats />} />
-        <Route path="/sucesso" element={<SuccessScreen />} />
+        <Route
+          path="/assentos/:idSessao"
+          element={
+            <MovieSeats ticketData={ticketData} setTicketData={setTicketData} />
+          }
+        />
+        <Route
+          path="/sucesso"
+          element={<SuccessScreen ticketData={ticketData} />}
+        />
       </Routes>
     </BrowserRouter>
   );

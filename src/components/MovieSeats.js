@@ -15,13 +15,16 @@ function Seat({
   function clickSeat() {
     if (isSelected) {
       setIsSelected(false);
-      const array = selectedSeats.filter((id) => id !== seatId);
-      setSelectedSeats([...array]);
+      const arrayIds = selectedSeats.seatsIds.filter((id) => id !== seatId);
+      const arrayNumbers = selectedSeats.seatsNumbers.filter((num) => num !== seatNumber)
+      setSelectedSeats({...selectedSeats, seatsIds: [...arrayIds], seatsNumbers: [...arrayNumbers]});
     } else if (!isAvailable) {
       alert("Esse assento não está disponível");
     } else {
       setIsSelected(true);
-      setSelectedSeats([...selectedSeats, seatId]);
+      const arrayIds = [...selectedSeats.seatsIds, seatId];
+      const arrayNumbers = [...selectedSeats.seatsNumbers, seatNumber]
+      setSelectedSeats({...selectedSeats, seatsIds: [...arrayIds], seatsNumbers: [...arrayNumbers]});
     }
   }
 
@@ -54,9 +57,12 @@ function Seats({ seatsArray, setSelectedSeats, selectedSeats }) {
   );
 }
 
-export default function MovieSeats() {
+export default function MovieSeats({ ticketData, setTicketData }) {
   const { idSessao } = useParams();
-  const [selectedSeats, setSelectedSeats] = useState([]);
+  const [selectedSeats, setSelectedSeats] = useState({
+    seatsIds: [],
+    seatsNumbers: [],
+  });
   const [movieData, setMovieData] = useState({});
   const [seats, setSeats] = useState([]);
   const [inputs, setInputs] = useState({ ids: [], name: "", cpf: "" });
@@ -65,13 +71,13 @@ export default function MovieSeats() {
   const handleChange = (event) => {
     const inputName = event.target.name;
     const inputValue = event.target.value;
-    setInputs({ ...inputs, [inputName]: inputValue, ids: selectedSeats });
+    setInputs({ ...inputs, [inputName]: inputValue, ids: selectedSeats.seatsIds });
   };
 
   useEffect(() => {
-    setInputs({ ...inputs, ids: [...selectedSeats] });
+    setInputs({ ...inputs, ids: [...selectedSeats.seatsIds] });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedSeats]);
+  }, [selectedSeats.seatsIds]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -89,10 +95,19 @@ export default function MovieSeats() {
       inputs
     );
     promise
-      .then((response) => {
-        // navigate("/sucesso");
+      .then(() => {
+        setTicketData({
+          ...ticketData,
+          name: inputs.name,
+          cpf: inputs.cpf,
+          date: movieData.date,
+          time: movieData.time,
+          movieTitle: movieData.title,
+          seats: selectedSeats.seatsNumbers,
+        });
+        navigate("/sucesso");
       })
-      .catch((error) => {
+      .catch(() => {
         alert("Preencha os campos corretamente!");
       });
   };
@@ -106,12 +121,16 @@ export default function MovieSeats() {
         ...response.data.movie,
         time: response.data.name,
         weekday: response.data.day.weekday,
+        date: response.data.day.date,
       });
+
       setSeats([...response.data.seats]);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
+
+  console.log(selectedSeats.seatsNumbers, selectedSeats.seatsIds);
+
   return (
     <>
       <main>
@@ -143,24 +162,24 @@ export default function MovieSeats() {
             <input
               type="text"
               name="name"
-              value={selectedSeats.length === 0 ? "" : inputs.name}
+              value={selectedSeats.seatsIds.length === 0 ? "" : inputs.name}
               onChange={handleChange}
               placeholder="Digite o seu nome..."
-              disabled={selectedSeats.length === 0}
+              disabled={selectedSeats.seatsIds.length === 0}
             ></input>
             <label htmlFor="cpf">CPF do comprador:</label>
             <input
               type="text"
               name="cpf"
-              value={selectedSeats.length === 0 ? "" : inputs.cpf}
+              value={selectedSeats.seatsIds.length === 0 ? "" : inputs.cpf}
               onChange={handleChange}
               placeholder="Digite seu CPF..."
-              disabled={selectedSeats.length === 0}
+              disabled={selectedSeats.seatsIds.length === 0}
             ></input>
             <input
               type="submit"
               value="Reservar assento(s)"
-              disabled={selectedSeats.length === 0}
+              disabled={selectedSeats.seatsIds.length === 0}
             ></input>
           </form>
         </section>
