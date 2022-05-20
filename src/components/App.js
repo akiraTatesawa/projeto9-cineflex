@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState } from "react";
+import styled from "styled-components";
 import SuccessScreen from "./SuccessScreen";
 import MovieSeats from "./MovieSeats";
 import MovieDateShowtimes from "./MovieDateShowtimes";
@@ -19,9 +20,9 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <header>
+      <Header>
         <h1>CINEFLEX</h1>
-      </header>
+      </Header>
       <Routes>
         <Route path="/" element={<MoviesSection />} />
         <Route path="/sessoes/:idMovie" element={<MovieDateShowtimes />} />
@@ -39,3 +40,17 @@ export default function App() {
     </BrowserRouter>
   );
 }
+
+const Header = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 67px;
+  background-color: #c3cfd9;
+
+  h1 {
+    color: #e8833a;
+    font-size: 34px;
+  }
+`;

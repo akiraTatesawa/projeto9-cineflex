@@ -12,16 +12,6 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 67px;
-  background-color: #c3cfd9;
-}
-
-button,
 input[type="submit"] {
   height: 43px;
   display: flex;
@@ -33,11 +23,6 @@ input[type="submit"] {
   border-radius: 3px;
   color: #ffffff;
   font-size: 18px;
-}
-
-h1 {
-  color: #e8833a;
-  font-size: 34px;
 }
 
 h2 {
@@ -56,45 +41,7 @@ main {
   margin-bottom: 125px;
 }
 
-/* Screen 1 */
-.movies-section {
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.movie-poster {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 145px;
-  height: 209px;
-  background-color: #ffffff;
-  box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.1);
-  border-radius: 3px;
-  margin-bottom: 11px;
-}
-
-.movie-poster img {
-  width: 129px;
-  height: 193px;
-}
-
-/* Screen 2 */
-.hour-buttons {
-  display: flex;
-  flex-flow: row wrap;
-  margin: 22px 0;
-}
-
-.hour-buttons button {
-  margin-bottom: 10px;
-  margin-right: 8px;
-}
-
 /* Screen 3 */
-
 .seats-selection {
   width: 100%;
   display: flex;
@@ -202,65 +149,4 @@ main {
 
 .buyer-data-inputs form input[disabled][type="submit"] {
   background-color: #b8afaf;
-}
-
-/* Screen 3 */
-.success-title {
-  color: #247a6b;
-  font-weight: 700;
-  line-height: 28px;
-}
-
-.success-screen div {
-  margin-bottom: 30px;
-}
-
-.success-screen h3 {
-  color: #293845;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 7px;
-}
-
-.success-screen p {
-  font-size: 22px;
-  color: #293845;
-  margin-bottom: 5px;
-}
-
-.success-screen button {
-  margin: 0 auto;
-  margin-top: 80px;
-  width: 225px;
-}
-
-/* Footer */
-footer {
-  position: fixed;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  width: 100%;
-  height: 117px;
-  padding: 14px 10px;
-  background-color: #dfe6ed;
-  border-top: 1px solid #9eadba;
-}
-
-footer .movie-poster {
-  width: 64px;
-  height: 89px;
-  margin-bottom: 0;
-  margin-right: 22px;
-}
-
-footer .movie-poster img {
-  width: 48px;
-  height: 72px;
-}
-
-footer p {
-  color: #293845;
-  font-size: 25px;
 }

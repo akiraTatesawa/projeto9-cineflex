@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 import axios from "axios";
 import Footer from "./Footer";
 
@@ -7,13 +8,13 @@ const MovieDateOptions = ({ weekday, date, showtimes }) => {
   return (
     <>
       <h3>{`${weekday} - ${date}`}</h3>
-      <div className="hour-buttons">
-        {showtimes.map(({id, name}, index) => (
+      <HourButtons>
+        {showtimes.map(({ id, name }, index) => (
           <Link key={index} to={`/assentos/${id}`}>
             <button>{name}</button>
           </Link>
         ))}
-      </div>
+      </HourButtons>
     </>
   );
 };
@@ -39,8 +40,8 @@ export default function MovieDateShowtimes() {
     <>
       <main>
         <h2>Selecione o horário</h2>
-        <section className="date-selection">
-          {movieDays.map(({weekday, date, showtimes}, index) => (
+        <section>
+          {movieDays.map(({ weekday, date, showtimes }, index) => (
             <MovieDateOptions
               key={index}
               weekday={weekday}
@@ -55,4 +56,23 @@ export default function MovieDateShowtimes() {
   );
 }
 
-//data.days e data
+const HourButtons = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  margin: 22px 0;
+
+  button {
+    height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e8833a;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 3px;
+    color: #ffffff;
+    font-size: 18px;
+    margin-bottom: 10px;
+    margin-right: 8px;
+  }
+`;

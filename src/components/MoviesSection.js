@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react/";
+import styled from "styled-components";
 import axios from "axios";
 
 export function Movie({ idMovie, moviePoster, movieTitle }) {
   return (
     <Link to={`/sessoes/${idMovie}`}>
-      <figure className="movie-poster">
+      <MoviePoster>
         <img src={moviePoster} alt={`${movieTitle} poster`} />
-      </figure>
+      </MoviePoster>
     </Link>
   );
 }
@@ -28,16 +29,40 @@ export default function MoviesSection() {
   return (
     <main>
       <h2>Selecione o filme</h2>
-      <section className="movies-section">
-        {movies.map((movie, index) => (
+      <Section>
+        {movies.map(({id, posterURL, title}) => (
           <Movie
-            idMovie={movie.id}
-            key={index}
-            moviePoster={movie.posterURL}
-            movieTitle={movie.title}
+            idMovie={id}
+            key={id}
+            moviePoster={posterURL}
+            movieTitle={title}
           />
         ))}
-      </section>
+      </Section>
     </main>
   );
 }
+
+const Section = styled.section`
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const MoviePoster = styled.figure`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 145px;
+  height: 209px;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  margin-bottom: 11px;
+
+  img {
+    width: 129px;
+    height: 193px;
+  }
+`;
