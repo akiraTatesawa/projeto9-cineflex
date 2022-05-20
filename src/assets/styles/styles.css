@@ -171,7 +171,8 @@ main {
   margin-bottom: 3px;
 }
 
-.buyer-data-inputs form input[type="text"] {
+.buyer-data-inputs form input[type="text"],
+.buyer-data-inputs form input[type="number"] {
   width: 100%;
   height: 51px;
   background-color: #ffffff;
@@ -194,12 +195,13 @@ main {
   margin-bottom: 30px;
 }
 
-.buyer-data-inputs form input[disabled][type="text"] {
-  background-color: #F3F3F3 ;
+.buyer-data-inputs form input[disabled][type="text"],
+.buyer-data-inputs form input[disabled][type="number"] {
+  background-color: #f3f3f3;
 }
 
 .buyer-data-inputs form input[disabled][type="submit"] {
-  background-color: #B8AFAF ;
+  background-color: #b8afaf;
 }
 
 /* Screen 3 */

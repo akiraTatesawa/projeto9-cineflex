@@ -21,21 +21,13 @@ export default function MovieSeats({ ticketData, setTicketData }) {
 
     setInputs({
       ...inputs,
-      [inputName]: inputValue,
+      [inputName]: inputValue.toString(),
       ids: selectedSeats.seatsIds,
     });
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (
-      inputs.ids.length === 0 ||
-      inputs.name.length === 0 ||
-      inputs.cpf.length === 0
-    ) {
-      alert("Preencha os campos corretamente!");
-      return;
-    }
 
     const promise = axios.post(
       "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many",
@@ -114,19 +106,23 @@ export default function MovieSeats({ ticketData, setTicketData }) {
             <input
               type="text"
               name="name"
+              id="name"
               value={selectedSeats.seatsIds.length === 0 ? "" : inputs.name}
               onChange={handleChange}
               placeholder="Digite o seu nome..."
               disabled={selectedSeats.seatsIds.length === 0}
+              required
             ></input>
             <label htmlFor="cpf">CPF do comprador:</label>
             <input
-              type="text"
+              type="number"
               name="cpf"
+              id="cpf"
               value={selectedSeats.seatsIds.length === 0 ? "" : inputs.cpf}
               onChange={handleChange}
               placeholder="Digite seu CPF..."
               disabled={selectedSeats.seatsIds.length === 0}
+              required
             ></input>
             <input
               type="submit"

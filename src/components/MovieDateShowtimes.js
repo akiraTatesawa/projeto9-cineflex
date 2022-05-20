@@ -8,9 +8,9 @@ const MovieDateOptions = ({ weekday, date, showtimes }) => {
     <>
       <h3>{`${weekday} - ${date}`}</h3>
       <div className="hour-buttons">
-        {showtimes.map((showtime, index) => (
-          <Link key={index} to={`/assentos/${showtime.id}`}>
-            <button>{showtime.name}</button>
+        {showtimes.map(({id, name}, index) => (
+          <Link key={index} to={`/assentos/${id}`}>
+            <button>{name}</button>
           </Link>
         ))}
       </div>
@@ -40,12 +40,12 @@ export default function MovieDateShowtimes() {
       <main>
         <h2>Selecione o horário</h2>
         <section className="date-selection">
-          {movieDays.map((day, index) => (
+          {movieDays.map(({weekday, date, showtimes}, index) => (
             <MovieDateOptions
               key={index}
-              weekday={day.weekday}
-              date={day.date}
-              showtimes={day.showtimes}
+              weekday={weekday}
+              date={date}
+              showtimes={showtimes}
             />
           ))}
         </section>

@@ -58,12 +58,12 @@ const Seat = ({
 export default function Seats({ seatsArray, setSelectedSeats, selectedSeats }) {
   return (
     <div className="seats">
-      {seatsArray.map((seat, index) => (
+      {seatsArray.map(({ id, name, isAvailable }) => (
         <Seat
-          key={index}
-          seatId={seat.id}
-          seatNumber={seat.name}
-          isAvailable={seat.isAvailable}
+          key={id}
+          seatId={id}
+          seatNumber={name}
+          isAvailable={isAvailable}
           setSelectedSeats={setSelectedSeats}
           selectedSeats={selectedSeats}
         ></Seat>
