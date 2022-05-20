@@ -19,7 +19,7 @@ const MovieDateOptions = ({ weekday, date, showtimes }) => {
   );
 };
 
-export default function MovieDateShowtimes() {
+export default function MovieDateShowtimes({ setIsHomepage }) {
   const { idMovie } = useParams();
   const [movieDays, setMovieDays] = useState([]);
   const [movieData, setMovieData] = useState({});
@@ -33,6 +33,8 @@ export default function MovieDateShowtimes() {
       setMovieDays([...response.data.days]);
       setMovieData({ ...response.data });
     });
+
+    setIsHomepage(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

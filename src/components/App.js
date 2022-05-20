@@ -1,4 +1,6 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { BsFillArrowLeftCircleFill } from "react-icons/bs";
+import { IconContext } from "react-icons";
 import { useState } from "react";
 import styled from "styled-components";
 import SuccessScreen from "./SuccessScreen";
@@ -17,15 +19,30 @@ export default function App() {
     date: "",
     time: "",
   });
+  const [isHomepage, setIsHomepage] = useState(true);
+  const navigate = useNavigate();
 
   return (
-    <BrowserRouter>
+    <>
       <Header>
+        {!isHomepage ? (
+          <IconContext.Provider
+            value={{ color: "#e8833a", size: "2em", style: {position: "absolute", left: "5%"} }}
+          >
+            <BsFillArrowLeftCircleFill onClick={() => navigate(-1)}/>
+          </IconContext.Provider>
+        ) : undefined}
         <h1>CINEFLEX</h1>
       </Header>
       <Routes>
-        <Route path="/" element={<MoviesSection />} />
-        <Route path="/sessoes/:idMovie" element={<MovieDateShowtimes />} />
+        <Route
+          path="/"
+          element={<MoviesSection setIsHomepage={setIsHomepage} />}
+        />
+        <Route
+          path="/sessoes/:idMovie"
+          element={<MovieDateShowtimes setIsHomepage={setIsHomepage} />}
+        />
         <Route
           path="/assentos/:idSessao"
           element={
@@ -37,11 +54,13 @@ export default function App() {
           element={<SuccessScreen ticketData={ticketData} />}
         />
       </Routes>
-    </BrowserRouter>
+    </>
   );
 }
 
 const Header = styled.header`
+  position: fixed;
+  top: 0%;
   display: flex;
   align-items: center;
   justify-content: center;

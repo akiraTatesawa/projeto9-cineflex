@@ -13,7 +13,7 @@ export function Movie({ idMovie, moviePoster, movieTitle }) {
   );
 }
 
-export default function MoviesSection() {
+export default function MoviesSection({ setIsHomepage }) {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -24,13 +24,16 @@ export default function MoviesSection() {
     promise.then((response) => {
       setMovies([...response.data]);
     });
+
+    setIsHomepage(true)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <main>
       <h2>Selecione o filme</h2>
       <Section>
-        {movies.map(({id, posterURL, title}) => (
+        {movies.map(({ id, posterURL, title }) => (
           <Movie
             idMovie={id}
             key={id}
