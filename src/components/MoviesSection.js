@@ -51,6 +51,8 @@ const Section = styled.section`
   flex-flow: row wrap;
   align-items: center;
   justify-content: space-between;
+  max-width: 525px;
+  margin: 0 auto;
 `;
 
 const MoviePoster = styled.figure`
