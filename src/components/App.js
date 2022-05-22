@@ -26,10 +26,8 @@ export default function App() {
     <>
       <Header>
         {!isHomepage ? (
-          <IconContext.Provider
-            value={{ color: "#e8833a", size: "2em", style: {position: "absolute", left: "5%"} }}
-          >
-            <BsFillArrowLeftCircleFill onClick={() => navigate(-1)}/>
+          <IconContext.Provider value={{ color: "#e8833a", size: "2em", style: { position: "absolute", left: "5%" },}}>
+            <BsFillArrowLeftCircleFill onClick={() => navigate(-1)} />
           </IconContext.Provider>
         ) : undefined}
         <h1>CINEFLEX</h1>

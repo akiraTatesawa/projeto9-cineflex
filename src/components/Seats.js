@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styled from "styled-components";
 
 const Seat = ({
   seatNumber,
@@ -57,7 +58,7 @@ const Seat = ({
 
 export default function Seats({ seatsArray, setSelectedSeats, selectedSeats }) {
   return (
-    <div className="seats">
+    <SeatsTable>
       {seatsArray.map(({ id, name, isAvailable }) => (
         <Seat
           key={id}
@@ -68,6 +69,13 @@ export default function Seats({ seatsArray, setSelectedSeats, selectedSeats }) {
           selectedSeats={selectedSeats}
         ></Seat>
       ))}
-    </div>
+    </SeatsTable>
   );
 }
+
+const SeatsTable = styled.div`
+  width: 310px;
+  display: flex;
+  flex-flow: row wrap;
+  height: auto;
+`;
