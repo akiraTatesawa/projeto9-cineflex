@@ -4,6 +4,8 @@ import styled from "styled-components";
 import axios from "axios";
 import Footer from "./Footer";
 import Seats from "./Seats";
+import { Loader } from "./MoviesSection";
+import loader from "../assets/img/loader.gif";
 
 export default function MovieSeats({ ticketData, setTicketData }) {
   const { idSessao } = useParams();
@@ -81,11 +83,15 @@ export default function MovieSeats({ ticketData, setTicketData }) {
       <main>
         <h2>Selecione o(s) assento(s)</h2>
         <SeatsSelection>
-          <Seats
-            seatsArray={seats}
-            setSelectedSeats={setSelectedSeats}
-            selectedSeats={selectedSeats}
-          />
+          {seats.length === 0 ? (
+            <Loader src={loader} alt="loading animation" />
+          ) : (
+            <Seats
+              seatsArray={seats}
+              setSelectedSeats={setSelectedSeats}
+              selectedSeats={selectedSeats}
+            />
+          )}
         </SeatsSelection>
         <SeatsCaption>
           <div>

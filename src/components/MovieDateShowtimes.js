@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import Footer from "./Footer";
+import { Loader } from "./MoviesSection";
+import loader from "../assets/img/loader.gif";
 
 const MovieDateOptions = ({ weekday, date, showtimes }) => {
   return (
@@ -42,21 +44,32 @@ export default function MovieDateShowtimes({ setIsHomepage }) {
     <>
       <main>
         <h2>Selecione o horário</h2>
-        <section>
-          {movieDays.map(({ weekday, date, showtimes }, index) => (
-            <MovieDateOptions
-              key={index}
-              weekday={weekday}
-              date={date}
-              showtimes={showtimes}
-            />
-          ))}
-        </section>
+        <Section alignment={movieDays.length === 0 ? "center" : "flex-start"} >
+          {movieDays.length === 0 ? (
+            <Loader src={loader} alt="loading animation" />
+          ) : (
+            movieDays.map(({ weekday, date, showtimes }, index) => (
+              <MovieDateOptions
+                key={index}
+                weekday={weekday}
+                date={date}
+                showtimes={showtimes}
+              />
+            ))
+          )}
+
+        </Section>
       </main>
       <Footer moviePoster={movieData.posterURL} movieTitle={movieData.title} />
     </>
   );
 }
+
+const Section = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: ${props => props.alignment};
+`;
 
 const HourButtons = styled.div`
   display: flex;

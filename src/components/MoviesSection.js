@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react/";
 import styled from "styled-components";
 import axios from "axios";
+import loader from "../assets/img/loader.gif"
 
 export function Movie({ idMovie, moviePoster, movieTitle }) {
   return (
@@ -33,7 +34,7 @@ export default function MoviesSection({ setIsHomepage }) {
     <main>
       <h2>Selecione o filme</h2>
       <Section>
-        {movies.map(({ id, posterURL, title }) => (
+        {movies.length === 0 ? <Loader src={loader} alt="loading animation" /> : movies.map(({ id, posterURL, title }) => (
           <Movie
             idMovie={id}
             key={id}
@@ -41,16 +42,23 @@ export default function MoviesSection({ setIsHomepage }) {
             movieTitle={title}
           />
         ))}
+        
       </Section>
     </main>
   );
 }
 
+export const Loader = styled.img`
+  width: 90px;
+  height: 90px;
+  margin-bottom: 60px;
+`;
+
 const Section = styled.section`
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   max-width: 525px;
   margin: 0 auto;
 `;
