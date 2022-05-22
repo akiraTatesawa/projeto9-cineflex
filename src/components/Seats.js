@@ -45,14 +45,13 @@ const Seat = ({
   }
 
   return (
-    <button
-      className={`${isAvailable ? "available" : "taken"} ${
-        isSelected && isAvailable ? "selected" : ""
-      }`}
+    <SeatButton
+      border={isAvailable ? isSelected ? "#45bdb0" : "#808f9d" : "#f7c52b"}
+      bgColor={isAvailable ? isSelected ? "#8dd7cf" : "#c3cfd9" : "#fbe192"}
       onClick={clickSeat}
     >
       {seatNumber}
-    </button>
+    </SeatButton>
   );
 };
 
@@ -78,4 +77,18 @@ const SeatsTable = styled.div`
   display: flex;
   flex-flow: row wrap;
   height: auto;
+`;
+
+export const SeatButton = styled.button`
+  flex: 0 0 26px;
+  width: 26px;
+  height: 26px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  margin-right: 5px;
+  padding: 7px;
+  color: #293845;
+  font-size: 11px;
+  border: 1px solid ${props => props.border};
+  background-color: ${props => props.bgColor};
 `;

@@ -28,18 +28,3 @@ main {
   margin-bottom: 125px;
   margin-top: 117px;
 }
-
-.available {
-  background-color: #c3cfd9;
-  border: 1px solid #808f9d;
-}
-
-.taken {
-  background-color: #fbe192;
-  border: 1px solid #f7c52b;
-}
-
-.selected {
-  background: #8dd7cf;
-  border: 1px solid #45bdb0;
-}

@@ -5,6 +5,7 @@ import axios from "axios";
 import Footer from "./Footer";
 import Seats from "./Seats";
 import { Loader } from "./MoviesSection";
+import { SeatButton } from "./Seats";
 import loader from "../assets/img/loader.gif";
 
 export default function MovieSeats({ ticketData, setTicketData }) {
@@ -95,15 +96,15 @@ export default function MovieSeats({ ticketData, setTicketData }) {
         </SeatsSelection>
         <SeatsCaption>
           <div>
-            <button className="selected"></button>
-            <span>Selecionado</span>
+            <SeatButton disabled border="#45bdb0" bgColor="#8dd7cf"></SeatButton>
+            <span>Selecionado</span> 
           </div>
           <div>
-            <button className="available"></button>
+            <SeatButton disabled border="#808f9d" bgColor="#c3cfd9"></SeatButton>
             <span>Disponível</span>
           </div>
           <div>
-            <button className="taken"></button>
+            <SeatButton disabled border="#f7c52b" bgColor="#fbe192"></SeatButton>
             <span>Indisponível</span>
           </div>
         </SeatsCaption>
@@ -116,7 +117,7 @@ export default function MovieSeats({ ticketData, setTicketData }) {
               id="name"
               value={selectedSeats.seatsIds.length === 0 ? "" : inputs.name}
               onChange={handleChange}
-              placeholder="Digite o seu nome..."
+              placeholder={selectedSeats.seatsIds.length === 0 ? "" : "Digite o seu nome..."}
               disabled={selectedSeats.seatsIds.length === 0}
               required
             ></Input>
@@ -127,7 +128,7 @@ export default function MovieSeats({ ticketData, setTicketData }) {
               id="cpf"
               value={selectedSeats.seatsIds.length === 0 ? "" : inputs.cpf}
               onChange={handleChange}
-              placeholder="Digite seu CPF..."
+              placeholder={selectedSeats.seatsIds.length === 0 ? "" : "Digite seu CPF..."}
               disabled={selectedSeats.seatsIds.length === 0}
               required
             ></Input>
@@ -154,18 +155,6 @@ const SeatsSelection = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  button {
-    flex: 0 0 26px;
-    width: 26px;
-    height: 26px;
-    border-radius: 12px;
-    margin-bottom: 18px;
-    margin-right: 5px;
-    padding: 7px;
-    color: #293845;
-    font-size: 11px;
-  }
 `;
 
 const SeatsCaption = styled.div`
@@ -173,18 +162,6 @@ const SeatsCaption = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   margin-bottom: 40px;
-
-  button {
-    flex: 0 0 26px;
-    width: 26px;
-    height: 26px;
-    border-radius: 12px;
-    margin-bottom: 18px;
-    margin-right: 5px;
-    padding: 7px;
-    color: #293845;
-    font-size: 11px;
-  }
 
   div {
     display: flex;
@@ -209,7 +186,7 @@ const Inputs = styled.section`
   label {
     color: #293845;
     font-size: 18px;
-    margin-bottom: 3px;
+    margin-bottom: 7px;
   }
 `;
 
