@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
 import { useState } from "react";
@@ -19,28 +19,28 @@ export default function App() {
     date: "",
     time: "",
   });
-  const [isHomepage, setIsHomepage] = useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <>
       <Header>
-        {!isHomepage ? (
-          <IconContext.Provider value={{ color: "#e8833a", size: "2em", style: { position: "absolute", left: "5%" },}}>
+        {location.pathname !== "/" ? (
+          <IconContext.Provider
+            value={{
+              color: "#e8833a",
+              size: "2em",
+              style: { position: "absolute", left: "5%" },
+            }}
+          >
             <BsFillArrowLeftCircleFill onClick={() => navigate(-1)} />
           </IconContext.Provider>
         ) : undefined}
         <h1>CINEFLEX</h1>
       </Header>
       <Routes>
-        <Route
-          path="/"
-          element={<MoviesSection setIsHomepage={setIsHomepage} />}
-        />
-        <Route
-          path="/sessoes/:idMovie"
-          element={<MovieDateShowtimes setIsHomepage={setIsHomepage} />}
-        />
+        <Route path="/" element={<MoviesSection />} />
+        <Route path="/sessoes/:idMovie" element={<MovieDateShowtimes />} />
         <Route
           path="/assentos/:idSessao"
           element={

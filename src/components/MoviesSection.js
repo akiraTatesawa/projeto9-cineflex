@@ -14,7 +14,7 @@ export function Movie({ idMovie, moviePoster, movieTitle }) {
   );
 }
 
-export default function MoviesSection({ setIsHomepage }) {
+export default function MoviesSection() {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -24,9 +24,7 @@ export default function MoviesSection({ setIsHomepage }) {
 
     promise.then((response) => {
       setMovies([...response.data]);
-    });
-
-    setIsHomepage(true)
+    })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
