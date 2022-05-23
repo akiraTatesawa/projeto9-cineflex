@@ -8,6 +8,15 @@ import { Loader } from "./MoviesSection";
 import { SeatButton } from "./Seats";
 import loader from "../assets/img/loader.gif";
 
+const cpfMask = (value) => {
+  return value
+    .replace(/\D/g, "") // substitui qualquer caracter que nao seja numero por nada
+    .replace(/(\d{3})(\d)/, "$1.$2") // captura 2 grupos de numero o primeiro de 3 e o segundo de 1, apos capturar o primeiro grupo ele adiciona um ponto antes do segundo grupo de numero
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d{1,2})/, "$1-$2")
+    .replace(/(-\d{2})\d+?$/, "$1"); // captura 2 numeros seguidos de um traço e não deixa ser digitado mais nada
+};
+
 export default function MovieSeats({ ticketData, setTicketData }) {
   const { idSessao } = useParams();
   const [selectedSeats, setSelectedSeats] = useState({
@@ -21,11 +30,14 @@ export default function MovieSeats({ ticketData, setTicketData }) {
 
   function handleChange(event) {
     const inputName = event.target.name;
-    const inputValue = event.target.value;
+    let inputValue = "";
+    inputName === "cpf"
+      ? (inputValue = cpfMask(event.target.value))
+      : (inputValue = event.target.value);
 
     setInputs({
       ...inputs,
-      [inputName]: inputValue.toString(),
+      [inputName]: inputValue,
       ids: selectedSeats.seatsIds,
     });
   }
@@ -96,15 +108,27 @@ export default function MovieSeats({ ticketData, setTicketData }) {
         </SeatsSelection>
         <SeatsCaption>
           <div>
-            <SeatButton disabled border="#45bdb0" bgColor="#8dd7cf"></SeatButton>
-            <span>Selecionado</span> 
+            <SeatButton
+              disabled
+              border="#45bdb0"
+              bgColor="#8dd7cf"
+            ></SeatButton>
+            <span>Selecionado</span>
           </div>
           <div>
-            <SeatButton disabled border="#808f9d" bgColor="#c3cfd9"></SeatButton>
+            <SeatButton
+              disabled
+              border="#808f9d"
+              bgColor="#c3cfd9"
+            ></SeatButton>
             <span>Disponível</span>
           </div>
           <div>
-            <SeatButton disabled border="#f7c52b" bgColor="#fbe192"></SeatButton>
+            <SeatButton
+              disabled
+              border="#f7c52b"
+              bgColor="#fbe192"
+            ></SeatButton>
             <span>Indisponível</span>
           </div>
         </SeatsCaption>
@@ -117,18 +141,26 @@ export default function MovieSeats({ ticketData, setTicketData }) {
               id="name"
               value={selectedSeats.seatsIds.length === 0 ? "" : inputs.name}
               onChange={handleChange}
-              placeholder={selectedSeats.seatsIds.length === 0 ? "" : "Digite o seu nome..."}
+              placeholder={
+                selectedSeats.seatsIds.length === 0
+                  ? ""
+                  : "Digite o seu nome..."
+              }
               disabled={selectedSeats.seatsIds.length === 0}
               required
             ></Input>
             <label htmlFor="cpf">CPF do comprador:</label>
             <Input
-              type="number"
+              type="text"
               name="cpf"
               id="cpf"
+              maxLength={14}
+              minLength={13}
               value={selectedSeats.seatsIds.length === 0 ? "" : inputs.cpf}
               onChange={handleChange}
-              placeholder={selectedSeats.seatsIds.length === 0 ? "" : "Digite seu CPF..."}
+              placeholder={
+                selectedSeats.seatsIds.length === 0 ? "" : "Digite seu CPF..."
+              }
               disabled={selectedSeats.seatsIds.length === 0}
               required
             ></Input>
